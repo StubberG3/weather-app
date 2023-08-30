@@ -1,0 +1,261 @@
+/* CSS DIRECTORY
+    1. VARIABLES
+    2. GLOBALS
+    3. COMPONENTS
+    4. MEDIA QUERIES
+*/
+
+
+/* 1. VARIABLES
+============================================================== */
+
+/* COLORS
+    - default body text  #000
+    - primary color      #9068dd
+    - accent color      TBD
+*/
+
+/* FONTS
+    - default body text  Roboto, sans-serif
+    - headings: TBD
+*/
+
+:root {
+    --primary-color: #9068dd;
+    --default-text-color: #000;
+    --background-color: #fff;
+    --role-logo-border-color: #fff;
+    --role-logo-size: 100px;
+    --standard-border-radius: 50px;
+    --role-logo-background-color: #fff;
+    --emphasis-text-color: #000;
+    --subtle-text-color: #4d4d4d;
+}
+
+@media only screen and (max-width: 869px) {
+    :root {
+        --section-margin: 64px;
+        --font-size: 17px;
+    }
+}
+
+@media only screen and (min-width: 870px) {
+    :root {
+        --section-margin: 150px;
+        --font-size: 20px;
+    }
+}
+
+/* 2. GLOBALS
+============================================================== */
+
+html {
+    line-height: 1.15;
+}
+
+input {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+    overflow: visible;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: var(--font-size);
+    line-height: 1.5em;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--default-text-color);
+}
+
+
+/* 3. COMPONENTS
+============================================================== */
+
+header,
+section {
+    margin-bottom: var(--section-margin);
+}
+
+header {
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    font-weight: 500;
+    margin: 0;
+}
+
+h1 {
+    font-size: 2em;
+    margin: .67em 0
+}
+
+h2 {
+    font-size: 1.5em;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+nav {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.role-logo {
+    width: var(--role-logo-size);
+    height: var(--role-logo-size);
+    position: relative;
+    border: solid 1px var(--role-logo-border-color);
+    border-radius: var(--standard-border-radius);
+    margin-right: var(--role-logo-right-margin);
+    box-shadow: 0 2px 0 0 var(--role-logo-border-color);
+    background: var(--role-logo-background-color);
+    flex-shrink: 0;
+}
+
+.role-logo img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.role {
+    position: relative;
+}
+
+.role-header {
+    display: flex;
+    align-items: center;
+}
+
+.role-title {
+    padding-top: 1px;
+    font-weight: 500;
+    color: var(--emphasis-text-color);
+}
+
+.role-key-points li {
+    margin-bottom: 10px;
+}
+
+.role-tenure {
+    font-size: 70%;
+    text-transform: uppercase;
+    color: var(--subtle-text-color);
+    padding-top: 4px;
+}
+
+/* 4. MEDIA QUERIES
+============================================================== */
+
+@media only screen and (min-width: 993px) {
+    .container {
+        padding: 2%;
+    }
+
+    nav {
+        flex-direction: row-reverse;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 32px;
+        width: 100%;
+    }
+
+    nav a {
+        display: block;
+        padding: 6px 0;
+    }
+
+    nav ul {
+        width: 100%;
+        max-height: 250px;
+        overflow: hidden;
+    }
+
+    .role:not(:last-child) {
+        padding-bottom: 64px;
+    }
+
+    .role:not(:last-child):before {
+        content: '';
+        position: absolute;
+        left: calc(var(--role-logo-size) / 2.0);
+        top: 0;
+        bottom: 0;
+        border-left: solid 1px var(--role-logo-border-color);
+        z-index: -1;
+    }
+
+    .role-header {
+        margin-bottom: 20px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .container {
+        margin: 0 auto;
+        max-width: 1140px;
+        padding: 1%;
+    }
+
+    .experience {
+        margin-bottom: calc(var(--section-spacing) - 40px);
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    h2 {
+        margin-bottom: 15px;
+    }
+
+    header {
+        flex-direction: column-reverse;
+    }
+
+    header .subtitle {
+        display: none;
+    }
+
+    nav a {
+        padding: 8px 16px;
+    }
+
+    nav a:focus-visible {
+        outline-offset: -8px;
+    }
+
+    nav ul {
+        display: flex;
+    }
+
+    .role:not(:last-child) {
+        padding-bottom: 32px;
+    }
+
+    .role-header {
+        margin-bottom: 25px;
+    }
+
+    .role-key-points {
+        padding-left: calc(var(--role-logo-size) + var(--role-logo-right-margin));
+    }
+}
