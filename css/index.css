@@ -11,7 +11,7 @@
 
 /* COLORS
     - default body text  #000
-    - primary color      #9068dd
+    - primary color      #372c4b
     - accent color      TBD
 */
 
@@ -21,27 +21,28 @@
 */
 
 :root {
-    --primary-color: #9068dd;
+    --primary-color: #4e406a;
     --default-text-color: #000;
     --background-color: #fff;
     --role-logo-border-color: #fff;
     --role-logo-size: 100px;
     --standard-border-radius: 50px;
     --role-logo-background-color: #fff;
-    --emphasis-text-color: #000;
-    --subtle-text-color: #4d4d4d;
+    --emphasis-text-color: #b3b3b3;
+    --subtle-text-color: #767676;
+    --link-underline-color: #acacac;
+    --link-hover-color: #816cab;
+    --avatar-size: 100px;
 }
 
-@media only screen and (max-width: 869px) {
+@media screen and (max-width: 992px) {
     :root {
-        --section-margin: 64px;
         --font-size: 17px;
     }
 }
 
-@media only screen and (min-width: 870px) {
+@media screen and (min-width: 993px) {
     :root {
-        --section-margin: 150px;
         --font-size: 20px;
     }
 }
@@ -51,14 +52,6 @@
 
 html {
     line-height: 1.15;
-}
-
-input {
-    font-family: inherit;
-    font-size: 100%;
-    line-height: 1.15;
-    margin: 0;
-    overflow: visible;
 }
 
 body {
@@ -75,42 +68,28 @@ body {
 /* 3. COMPONENTS
 ============================================================== */
 
-header,
-section {
-    margin-bottom: var(--section-margin);
-}
-
 header {
     display: flex;
     align-items: center;
 }
 
-h1 {
-    font-weight: 500;
-    margin: 0;
+footer .skills i {
+    display: block;
 }
 
-h1 {
-    font-size: 2em;
-    margin: .67em 0
-}
-
-h2 {
-    font-size: 1.5em;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
-nav {
-    flex: 1;
-    display: flex;
-    align-items: center;
-}
-
-ul {
-    list-style-type: none;
+.education ul,
+.experience ul {
     padding: 0;
     margin: 0;
+}
+
+.role ul li:not(.role-tenure)::before {
+    content: "\2022";
+    color: var(--primary-color);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
 }
 
 .role-logo {
@@ -148,6 +127,10 @@ ul {
     color: var(--emphasis-text-color);
 }
 
+ul.role-key-points {
+    padding: 0 1em;
+}
+
 .role-key-points li {
     margin-bottom: 10px;
 }
@@ -157,38 +140,22 @@ ul {
     text-transform: uppercase;
     color: var(--subtle-text-color);
     padding-top: 4px;
+    list-style-type: none;
+}
+
+.welcome {
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10rem;
 }
 
 /* 4. MEDIA QUERIES
 ============================================================== */
 
 @media only screen and (min-width: 993px) {
-    .container {
-        padding: 2%;
-    }
-
-    nav {
-        flex-direction: row-reverse;
-    }
-
-    nav {
-        flex-wrap: wrap;
-        justify-content: space-between;
-        margin-bottom: 32px;
-        width: 100%;
-    }
-
-    nav a {
-        display: block;
-        padding: 6px 0;
-    }
-
-    nav ul {
-        width: 100%;
-        max-height: 250px;
-        overflow: hidden;
-    }
-
     .role:not(:last-child) {
         padding-bottom: 64px;
     }
@@ -209,42 +176,12 @@ ul {
 }
 
 @media only screen and (max-width: 992px) {
-    .container {
-        margin: 0 auto;
-        max-width: 1140px;
-        padding: 1%;
-    }
-
     .experience {
         margin-bottom: calc(var(--section-spacing) - 40px);
     }
 
-    h1 {
-        font-size: 20px;
-    }
-
-    h2 {
-        margin-bottom: 15px;
-    }
-
-    header {
-        flex-direction: column-reverse;
-    }
-
     header .subtitle {
         display: none;
-    }
-
-    nav a {
-        padding: 8px 16px;
-    }
-
-    nav a:focus-visible {
-        outline-offset: -8px;
-    }
-
-    nav ul {
-        display: flex;
     }
 
     .role:not(:last-child) {
@@ -258,4 +195,25 @@ ul {
     .role-key-points {
         padding-left: calc(var(--role-logo-size) + var(--role-logo-right-margin));
     }
+}
+
+a {
+    color: inherit;
+    text-decoration-style: dotted;
+    text-decoration-line: underline;
+    text-underline-position: under;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--link-underline-color);
+}
+
+.avatar {
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    border-radius: calc(var(--avatar-size) / 2.0);
+    margin: 0 auto;
+}
+
+.primary-color-text {
+    color: var(--primary-color);
 }
