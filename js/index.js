@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    $('.nav-link').click(function (e) {
+    function setCurrPage (e) {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
@@ -12,5 +12,11 @@ document.addEventListener('DOMContentLoaded', function () {
             $('*[data-page]').removeClass('current-page');
             $('[data-page="' + currPage + '"]').addClass('current-page');
         }
-    })
+    }
+    var navEls = document.getElementsByClassName('nav-link');
+    for (var i = 0; i < navEls.length; i++) {
+        navEls[i].addEventListener('click', setCurrPage);
+    }
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(elems);
 });

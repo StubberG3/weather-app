@@ -178,6 +178,27 @@
                 right: 0;
             }
         }
+
+        .btn.dropdown-trigger {
+            border-radius: 25px;
+            width: 50px;
+            height: 50px;
+            text-align: left;
+            margin: 10px;
+        }
+
+        .dropdown-content li a {
+            color: var(--primary-color);
+        }
+
+        .btn.dropdown-trigger:hover,
+        .btn.dropdown-trigger:focus {
+            background: var(--link-hover-color);
+        }
+
+        .btn.dropdown-trigger i {
+            vertical-align: -webkit-baseline-middle;
+        }
     </style>
 </head>
 
@@ -197,31 +218,44 @@
                         <li>
                             <a href="https://www.linkedin.com/in/stubberg3/" target="_blank" rel="noopener noreferrer"
                                 class="social-btn">
-                                <i class="fa fa-fw fa-linkedin"></i>
+                                <i class="fa fa-2x fa-fw fa-linkedin"></i>
                             </a>
                         </li>
                         <li>
                             <a href="https://github.com/stubberg3" target="_blank" rel="noopener noreferrer"
                                 class="social-btn">
-                                <i class="fa fa-fw fa-github"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://twitter.com/borknbeans" target="_blank" rel="noopener noreferrer"
-                                class="social-btn">
-                                <i class="fa fa-fw fa-twitter"></i>
+                                <i class="fa fa-2x fa-fw fa-github"></i>
                             </a>
                         </li>
                         <li>
                             <a href="mailto:stubberg3@gmail.com?subject=I have an opportunity for you&body=Hi Gregg,%0A%0AI was looking at your website and..."
                                 title="email" target="_blank" class="social-btn"> <i
-                                    class="fa fa-fw fa-envelope"></i></a>
+                                    class="fa fa-2x fa-fw fa-envelope"></i></a>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="flex-column right-column">
-                <div class="nav">
+                <!-- Dropdown Trigger -->
+                <a class='primary-color dropdown-trigger btn hide-on-med-and-up' href='#' data-target='dropdown'>
+                    <i class="material-icons">menu</i>
+                </a>
+
+                <!-- Dropdown Structure -->
+                <ul id='dropdown' class='dropdown-content hide-on-med-and-up'>
+                    <li class="nav-item active" data-nav-item="home"><a id="home" data-hover="Home" href="#!"
+                            class="nav-link">Home</a></li>
+                    <li class="nav-item" data-nav-item="about"><a id="about" data-hover="About" href="#!"
+                            class="nav-link">About</a>
+                    </li>
+                    <li><a href="../docs/Gregg_Stubberfield_Resume.pdf" data-hover="Resume" target="_blank">Resume</a>
+                    </li>
+                    <li><a href="pages/weather.html" data-hover="Projects" target="_blank">Projects</a></li>
+                    <li><a href="mailto:stubberg3@gmail.com?subject=I have an opportunity for you&body=Hi Gregg,%0A%0AI was looking at your website and..."
+                            data-hover="Contact" title="email">Contact</a></li>
+                </ul>
+
+                <div class="nav hide-on-small-only">
                     <ul class="top-nav">
                         <li class="nav-item active" data-nav-item="home"><a id="home" data-hover="Home" href="#!"
                                 class="nav-link">Home</a></li>
@@ -230,6 +264,7 @@
                         </li>
                         <li><a href="../docs/Gregg_Stubberfield_Resume.pdf" data-hover="Resume"
                                 target="_blank">Resume</a></li>
+                        <li><a href="pages/weather.html" data-hover="Projects" target="_blank">Projects</a></li>
                         <li><a href="mailto:stubberg3@gmail.com?subject=I have an opportunity for you&body=Hi Gregg,%0A%0AI was looking at your website and..."
                                 data-hover="Contact" title="email">Contact</a></li>
                     </ul>
@@ -259,8 +294,7 @@
                         </p>
                     </div>
                     <div id="projects" data-page="projects" class="page">
-                        <p>TBD
-                        </p>
+                        <p>TBD</p>
                     </div>
                 </div>
                 <div class="curve"></div>

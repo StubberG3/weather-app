@@ -1,12 +1,18 @@
 $primary-color: #372c4b !default;
 $primary-color-light: #e0dde5 !default;
+$accent-color: #f57c00 !default;
+$accent-color-light: #ffe0b2 !default;
+
+$input-focus-color: $accent-color !default;
+$switch-bg-color: $accent-color !default;
+$switch-checked-lever-bg: $accent-color-light !default;
 
 .primary-color-text {
     color: $primary-color;
 }
 
 .primary-color {
-    background-color: $primary-color;
+    background-color: $primary-color !important;
 }
 
 .primary-color-light-text {
@@ -14,5 +20,5 @@ $primary-color-light: #e0dde5 !default;
 }
 
 .primary-color-light {
-    background-color: $primary-color-light;
+    background-color: $primary-color-light !important;
 }
