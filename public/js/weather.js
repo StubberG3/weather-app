@@ -56,6 +56,11 @@ const app = {
     },
     onFetchWeatherSuccess (jqXHR, status) {
         console.log(jqXHR, status);
+        if (jqXHR.error) {
+            alert('Error retrieving data. Try another zip?');
+            $('#loading').hide();
+            return;
+        }
         app.showWeather(jqXHR.zipResults, jqXHR.weatherResults);
         let lat = jqXHR.weatherResults.lat;
         let lon = jqXHR.weatherResults.lon;
