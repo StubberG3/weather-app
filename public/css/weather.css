@@ -236,3 +236,11 @@ input[type=number]:not(.browser-default) {
 .btn {
     background-color: var(--primary-color);
 }
+
+a.wahay {
+    color: #fff;
+}
+
+a.wahay:hover {
+    color: var(--accent-color);
+}

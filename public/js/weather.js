@@ -160,6 +160,23 @@ const app = {
             M.Collapsible.init(document.querySelectorAll('.collapsible'));
             $('#zip-input').on('keyup', app.validateZip);
             $('#zip-submit').click(app.submitZip);
+            $('#wahay').click(function() {
+                if (!this.msg) {
+                    this.msg = 'Wahay!';
+                    this.called = 0;
+                } else {
+                    this.msg += 'Wahay!';
+                    this.called++;
+                }
+
+                if (this.called === 3) {
+                    alert('STAHP');
+                } else if (this.called > 3) {
+                    alert('STAHP...WHHAAAAAAAAAHAYYYYYYY!!!!');
+                } else {
+                    alert(this.msg);
+                }
+            });
         });
     },
     validateZip: (e) => {
