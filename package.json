@@ -1,0 +1,26 @@
+{
+    "name": "express-weather-app",
+    "version": "1.0.0",
+    "description": "Express Weather App on Render",
+    "main": "app.js",
+    "repository": "https://github.com/StubberG3/stubberg3.github.io",
+    "author": "Gregg Stubberfield",
+    "private": false,
+    "scripts": {
+        "start": "node app.js",
+        "lint": "eslint '*.js'"
+    },
+    "dependencies": {
+        "axios": "^1.6.7",
+        "body-parser": "^1.20.2",
+        "dotenv": "^16.4.1",
+        "express": "^4.18.2",
+        "jshint": "^2.13.6"
+    },
+    "engines": {
+        "node": ">=14"
+    },
+    "devDependencies": {
+        "eslint": "^7.6.0"
+    }
+}

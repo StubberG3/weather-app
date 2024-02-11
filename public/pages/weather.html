@@ -45,7 +45,8 @@
             </div>
             <div class="input-field">
                 <i class="material-icons prefix center">search</i>
-                <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==5) return false;" placeholder="Search by Zip Code" id="zip-input">
+                <input id="zip-input" type="number" pattern="/^-?\d+\.?\d*$/" placeholder="Search by Zip Code">
+                <span id="zip-input-message" class="helper-text red-text"></span>
             </div>
             <div id="temp-scale" class="switch" style="margin: 0 10px;">
                 <label>
@@ -55,6 +56,10 @@
                     C&deg;
                 </label>
             </div>
+        </div>
+
+        <div class="right-align" style="margin-right: 20px;">
+            <a id="zip-submit" href="#!" class="btn disabled">Get Weather</a>
         </div>
 
         <main class="flex-container forecast-list">
