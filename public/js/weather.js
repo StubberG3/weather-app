@@ -1,8 +1,10 @@
 'use strict';
+
+let chart = {};
+let map = {};
 const app = {
     init: () => {
         app.setEvents();
-        app.fetchWeather();
         app.fetchMap();
     },
     colors: {
@@ -23,7 +25,7 @@ const app = {
     fetchMap: (lat = app.default.latitude, lon = app.default.longitude) => {
         // fetch the map
         let zoom = 13;
-        let map = L.map('map', {
+        map = L.map('map', {
             center: L.latLng(lat, lon),
         }).setView([lat, lon], zoom);
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -50,8 +52,22 @@ const app = {
         window.setTimeout(function() {
             map.invalidateSize();
         }, 1000);
+        app.fetchWeather();
     },
-    onFetchWeatherError: function (jqXHR, err, errThrown) {
+    onFetchWeatherSuccess (jqXHR, status) {
+        console.log(jqXHR, status);
+        app.showWeather(jqXHR.zipResults, jqXHR.weatherResults);
+        let lat = jqXHR.weatherResults.lat;
+        let lon = jqXHR.weatherResults.lon;
+        if ($('#zip-input').val().length === 5) {
+            map.panTo([lat, lon], 19);
+        }
+        if ($('#zip-submit').val()) {
+            $('#zip-submit').removeClass('disabled');
+        }
+        $('#loading').hide();
+    },
+    onFetchWeatherError (jqXHR, err, errThrown) {
         let message;
         const statusErrorMap = {
             '400' : "Server understood the request, but request content was invalid.",
@@ -77,18 +93,11 @@ const app = {
         }
         console.log(message);
     },
-    onFetchWeatherSuccess: (jqXHR, status) => {
-        console.log(jqXHR, status);
-        app.showWeather(jqXHR);
-        if ($('#zip-submit').val()) {
-            $('#zip-submit').removeClass('disabled');
-        }
-        $('#loading').hide();
-    },
     fetchWeather: (zip = app.default.zip) => {
         let data = {
             zip: zip
         };
+
         $.ajax({
             type: "POST",
             url: '/pages/weather.html',
@@ -176,13 +185,13 @@ const app = {
         $('#loading').show();
         app.fetchWeather(zip);
     },
-    showWeather: (resp) => {
+    showWeather: (zipResp, weatherResp) => {
         let scale = app.getTempScale();
         /*
          * Today's Forecast
          */
         (function showToday() {
-            let current = resp.current;
+            let current = weatherResp.current;
             let today = document.querySelector('.today');
             $('#today-date').text(
                 new Date(current.dt * 1000).toLocaleDateString('en-US', {
@@ -193,7 +202,7 @@ const app = {
                     minute: '2-digit'
                 })
             );
-            $('#city-state').text(`${resp.city ? resp.city : 'Welp'}, ${resp.state ? resp.state : 'GG'}`);
+            $('#city-state').text(`${zipResp.city}, ${zipResp.state}`);
             today.innerHTML = `<div class='row no-margin'>
                 <div class='col s12'>
                     <div class='row valign-wrapper no-margin'>
@@ -230,51 +239,53 @@ const app = {
         /*
          * Hourly Forecast
          */
-        (function showHourly() {
-            let hourly = resp.hourly;
-            const hourlyTemps = hourly.map( (hour) => {
-                return app.convertCtoF(hour.temp, scale);
-            });
-            const hourlyWindSpeed = hourly.map( (hour) => {
-                return hour.wind_speed;
-            });
-            const hourlyHours = hourly.map( (hour) => {
-                return new Date(hour.dt * 1000)
-                    .toLocaleString('en-US',
-                        {
-                            hour: 'numeric'
-                        }
-                    );
-            });
+        let hourly = weatherResp.hourly;
+        const hourlyTemps = hourly.map( (hour) => {
+            return app.convertCtoF(hour.temp, scale);
+        });
+        const hourlyWindSpeed = hourly.map( (hour) => {
+            return hour.wind_speed;
+        });
+        const hourlyHours = hourly.map( (hour) => {
+            return new Date(hour.dt * 1000)
+                .toLocaleString('en-US',
+                    {
+                        hour: 'numeric'
+                    }
+                );
+        });
 
-            const data = {
-                labels: hourlyHours,
-                datasets: [{
-                    label: 'Temperature by Hour',
-                    data: hourlyTemps,
-                    fill: true,
-                    backgroundColor: app.colors['primary-color-light-2'],
-                    borderColor: app.colors['primary-color'],
-                    tension: 0.1
-                }]
-            };
+        const data = {
+            labels: hourlyHours,
+            datasets: [{
+                label: 'Temperature by Hour',
+                data: hourlyTemps,
+                fill: true,
+                backgroundColor: app.colors['primary-color-light-2'],
+                borderColor: app.colors['primary-color'],
+                tension: 0.1
+            }]
+        };
 
-            const data2 = {
-                labels: hourlyHours,
-                datasets: [{
-                    label: 'Wind Speed by Hour',
-                    data: hourlyWindSpeed,
-                    fill: true,
-                    backgroundColor: 'orange',
-                    borderColor: '#f57c00',
-                    tension: 0.1
-                }]
-            };
+        const data2 = {
+            labels: hourlyHours,
+            datasets: [{
+                label: 'Wind Speed by Hour',
+                data: hourlyWindSpeed,
+                fill: true,
+                backgroundColor: 'orange',
+                borderColor: '#f57c00',
+                tension: 0.1
+            }]
+        };
 
-            const ctx = document.getElementById('hourly-chart');
-            const chart = new Chart(ctx, {
+        const ctx = document.getElementById('hourly-chart');
+        let currData = $('#chart-switch-input').prop('checked') ? data2 : data;
+
+        if (!$('#zip-input').val()) {
+            chart = new Chart(ctx, {
                 type: 'line',
-                data: data,
+                data: currData,
                 options: {
                     animations: {
                         radius: {
@@ -302,28 +313,36 @@ const app = {
                     }
                 }
             });
+        } else {
+            chart.data = currData;
+            chart.options.scales.y.ticks = {
+                callback: function (value) {
+                    return $('#chart-switch-input').prop('checked') ? value : `${value} °${scale}`;
+                }
+            };
+            chart.update();
+        }
 
-            $('#chart-switch-input').click((e) => {
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-                let isChecked = $(e.target).prop('checked');
-                chart.data = isChecked ? data2 : data;
-                chart.options.scales.y.ticks = {
-                    callback: function (value) {
-                        return isChecked ? value : `${value} °${scale}`;
-                    }
-                };
-                chart.update();
-                $('.chart-switch-desc').toggleClass('active');
-            });
-        })();
+        $('#chart-switch-input').click((e) => {
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            let isChecked = $(e.target).prop('checked');
+            chart.data = isChecked ? data2 : data;
+            chart.options.scales.y.ticks = {
+                callback: function (value) {
+                    return isChecked ? value : `${value} °${scale}`;
+                }
+            };
+            chart.update();
+            $('.chart-switch-desc').toggleClass('active');
+        });
 
         /*
          * Weekly Forecast
          */
         (function showWeekly() {
             let weekly = document.querySelector('.weekly');
-            weekly.innerHTML = resp.daily
+            weekly.innerHTML = weatherResp.daily
                 .map((day, idx) => {
                     let dt = new Date(day.dt * 1000); //timestamp * 1000
                     return `<li data-weekly-item='${idx}'>

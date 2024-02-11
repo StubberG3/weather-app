@@ -25,42 +25,35 @@ app.post('/pages/weather.html', jsonParser, function (req, res) {
     const body = req.body;
     console.log('BODY', body);
 
-    const loc = {
-        city: 'Philadelphia',
-        state: 'PA',
-        zip: 19019, // philly
-        latitude: 39.952583,
-        longitude: -75.165222
-    };
-    let lat = loc.latitude;
-    let lon = loc.longitude;
-    let lang = 'en';
-    let units = 'metric';
-    let zip = req.body.zip;
-    let callName = req.body.callName;
-    if (callName === 'fetchZip') {
-        console.log('TODO: Another call needed...');
-    }
-    let apiKey = process.env.OPENWEATHERMAP_API_KEY;
+    let defaultZip = '19019'; // philly
+    let zip = !body.zip ? defaultZip : body.zip;
+    let zipApiKey = process.env.ZIPCODESTACK_API_KEY;
+    let weatherApiKey = process.env.OPENWEATHERMAP_API_KEY;
+    let city = '';
+    let state = '';
 
-    let url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${apiKey}&appid=${apiKey}&units=${units}&lang=${lang}`;
-
-    const fetchData = (async () => {
-        try {
-            const response = await axios.get(url);
-            res.send(response.data);
-            // console.log(response.data);
-            // console.log(response.status);
-            // console.log(response.statusText);
-            // console.log(response.headers);
-            // console.log(response.config);
-        } catch (error) {
-          // Handle error
-            console.error('Fetch error: ', error);
-        }
-    });
-
-    fetchData();
+    axios
+        .get(`https://api.zipcodestack.com/v1/search?codes=${zip}&country=us&apikey=${zipApiKey}`)
+        .then(response => {
+            let data = response['data']['results'][zip][0];
+            console.log(data);
+            let lat = data.latitude;
+            let lon = data.longitude;
+            city = data.city;
+            state = data.state;
+            let units = 'metric';
+            let lang = 'en';
+            return axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${weatherApiKey}&appid=${weatherApiKey}&units=${units}&lang=${lang}`);
+        })
+        .then(response => {
+            res.send({
+                zipResults: {
+                    city: city,
+                    state: state
+                },
+                weatherResults: response.data,
+            });
+        });
 });
 
 const server = app.listen(port, (err) => {

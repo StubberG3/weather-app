@@ -140,14 +140,23 @@ input[type=number]:not(.browser-default) {
 } */
 
 .top-row {
-    margin-left: 120px;
+    margin-left: 110px;
+    margin-right: 10px;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+}
+
+.zip-submit-wrapper {
+    margin-left: 10px;
 }
 
 @media screen and (max-width: 993px) {
     .top-row {
-        margin-left: 5px;
+        margin-left: 10px;
+    }
+    .zip-submit-wrapper {
+        margin: 0 auto;
     }
 }
 
@@ -165,7 +174,7 @@ input[type=number]:not(.browser-default) {
     flex: 1 1 auto;
     align-items: center;
     width: 45%;
-    margin: 10px 20px;
+    margin: 10px;
 }
 
 .flex-item .card,
