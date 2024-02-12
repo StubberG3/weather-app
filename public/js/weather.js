@@ -395,7 +395,32 @@ const app = {
                     let dt = new Date(day.dt * 1000); //timestamp * 1000
                     return `<li data-weekly-item='${idx}'>
                         <div class='collapsible-header row valign-wrapper no-margin'>
-                            <div class='col s3 day'>
+                            <div class='col s12 center-align day hide-on-med-and-up' style="margin-left: 20px;">
+                                <span>
+                                    ${dt.toLocaleDateString('en-US',
+                                            {
+                                                weekday: 'long'
+                                            }
+                                        )
+                                    }
+                                </span>
+                                <br>
+                                <span class='temp-primary temp-max'>
+                                ${app.getLongTemp(day.temp.max, scale)}</span>
+                                /
+                                <span class='temp-min'>
+                                ${app.getLongTemp(day.temp.min, scale)}</span>
+                                <br>
+                                <img
+                                style="width: 50px; height: 50px;"
+                                src='http://openweathermap.org/img/wn/${day.weather[0].icon}@4x.png'
+                                alt='${app.toTitleCase(day.weather[0].description)}'
+                                />
+                                <em style="bottom: 15px;
+                                position: relative;
+                            ">${day.weather[0].main}</em>
+                            </div>
+                            <div class='col s3 day hide-on-small-only'>
                                 <span class='hide-on-med-and-up'>
                                     ${dt.toLocaleDateString('en-US',
                                             {
@@ -414,14 +439,14 @@ const app = {
                                     }
                                 </span>
                             </div>
-                            <div class='col s4 temperature'>
+                            <div class='col s4 temperature hide-on-small-only'>
                                 <span class='temp-primary temp-max'>
                                 ${app.getLongTemp(day.temp.max, scale)}</span>
                                 /
                                 <span class='temp-min'>
                                 ${app.getLongTemp(day.temp.min, scale)}</span>
                             </div>
-                            <div class='col s5 weather valign-wrapper'>
+                            <div class='col s5 weather valign-wrapper hide-on-small-only'>
                                 <img
                                     src='http://openweathermap.org/img/wn/${day.weather[0].icon}@4x.png'
                                     alt='${app.toTitleCase(day.weather[0].description)}'
@@ -434,8 +459,10 @@ const app = {
                             </div>
                             <i class='fa-solid fa-chevron-down right primary-color-text'></i>
                         </div>
-                        <div class='collapsible-body'>
-                            ${day.humidity}% Humidity</span>
+                        <div class='collapsible-body center-align'>
+                            <span>${day.humidity}% Humidity</span> <b class="primary-color-text">|</b>
+                            <span>${day.uvi} UV Index</span> <b class="primary-color-text">|</b>
+                            <span>${day.wind_speed} Wind Speed (${app.getLongWindSpeed(day.wind_speed)})</span>
                         </div>
                     </li>`;
                 })

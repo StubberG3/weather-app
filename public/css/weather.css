@@ -264,3 +264,19 @@ a.wahay:hover {
 .sidenav-trigger:hover {
     background-color: var(--accent-color);
 }
+
+@media screen and (max-width: 993px) {
+    h2 {
+        font-size: 3rem;
+    }
+
+    .flex-item {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 601px) {
+    .flex-item {
+        width: 100%;
+    }
+}
