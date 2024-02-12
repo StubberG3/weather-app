@@ -29,21 +29,18 @@
                 </div>
             </li>
             <li><a href="#!"><i class="fa fa-2x fa-table-cells-large white-text"></i></a></li>
-            <li><a href="#!"><i class="fa fa-2x fa-cloud-showers-heavy"></i></a></li>
-            <li><a href="#!"><i class="fa fa-2x fa-wind"></i></a></li>
-            <li><a href="#!"><i class="fa fa-2x fa-temperature-half"></i></a></li>
-            <li><a href="#!"><i class="fa fa-2x fa-location-dot"></i></a></li>
-            <li><a href="#!"><i class="fa fa-2x fa-bell"></i></a></li>
-            <li><a href="#!"><i class="fa fa-2x fa-user-cog"></i></a></li>
-            <li style="position: absolute; bottom: 40px;"><a href="../index.html"><i class="fa fa-2x fa-right-from-bracket"></i></a></li>
+            <li class="sidenav-logout"><a href="../index.html"><i class="fa fa-2x fa-right-from-bracket"></i></a></li>
         </ul>
 
         <div class="top-row">
+            <a href="#" data-target="slide-out" class="left sidenav-trigger primary-color-text hide-on-large-only">
+                <i class="material-icons">menu</i>
+            </a>
             <div style="flex: 1 1 auto;">
-                <h6 id="city-state" style="font-weight: 500; margin-bottom: 0;"></h6>
+                <h6 id="city-state" class="no-margin" style="font-weight: 500;"></h6>
                 <p id="today-date" style="margin-top: 0;"></p>
             </div>
-            <div class="input-field">
+            <div class="input-field" style="margin-top: 0;">
                 <i class="material-icons prefix center">search</i>
                 <input id="zip-input" type="number" pattern="/^-?\d+\.?\d*$/" placeholder="Search by Zip Code">
             </div>

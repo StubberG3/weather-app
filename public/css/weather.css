@@ -140,8 +140,8 @@ input[type=number]:not(.browser-default) {
 } */
 
 .top-row {
+    margin: 10px;
     margin-left: 110px;
-    margin-right: 10px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -149,6 +149,7 @@ input[type=number]:not(.browser-default) {
 
 .zip-submit-wrapper {
     margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 @media screen and (max-width: 993px) {
@@ -243,4 +244,23 @@ a.wahay {
 
 a.wahay:hover {
     color: var(--accent-color);
+}
+
+.sidenav-logout {
+    position: absolute; bottom: 40px;
+}
+
+.sidenav-trigger {
+    align-self: flex-start;
+    background-color: var(--primary-color);
+    color: #fff;
+    border-radius: 50px;
+    padding: 10px;
+    padding-bottom: 5px;
+    margin-right: 5px;
+    transition: all .2s;
+}
+
+.sidenav-trigger:hover {
+    background-color: var(--accent-color);
 }

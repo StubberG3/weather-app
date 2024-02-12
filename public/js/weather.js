@@ -1,6 +1,9 @@
 'use strict';
 
 let chart = {};
+let marker = {};
+let circle = {};
+let popup = {};
 let map = {};
 const app = {
     init: () => {
@@ -22,6 +25,20 @@ const app = {
         latitude: 39.952583,
         longitude: -75.165222
     },
+    disableMap: () => {
+        if (map) {
+            map._handlers.forEach(function(handler) {
+                handler.disable();
+            });
+        }
+    },
+    enableMap: () => {
+        if (map) {
+            map._handlers.forEach(function(handler) {
+                handler.enable();
+            });
+        }
+    },
     fetchMap: (lat = app.default.latitude, lon = app.default.longitude) => {
         // fetch the map
         let zoom = 13;
@@ -34,18 +51,19 @@ const app = {
             <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>`,
         }).addTo(map);
         // add marker
-        L.marker([lat, lon]).addTo(map);
-        L.circle([lat, lon], {
+        marker = L.marker([lat, lon]).addTo(map);
+        circle = L.circle([lat, lon], {
             color: app.colors['primary-color'],
             fillColor: app.colors['primary-color'],
             fillOpacity: 0.5,
             radius: 500
         }).addTo(map);
-        var popup = L.popup();
+        popup = L.popup();
         function onMapClick(e) {
+            console.log(e.latlng);
             popup
                 .setLatLng(e.latlng)
-                .setContent(`You clicked the map at ${e.latlng.toString()}`)
+                .setContent(`You clicked the map at coordinates: (${lat}, ${lon})`)
                 .openOn(map);
         }
         map.on('click', onMapClick);
@@ -66,10 +84,17 @@ const app = {
         let lon = jqXHR.weatherResults.lon;
         if ($('#zip-input').val().length === 5) {
             map.panTo([lat, lon], 19);
+            marker.setLatLng([lat, lon]);
+            circle.setLatLng([lat, lon]);
+            popup
+                .setLatLng([lat, lon])
+                .setContent(`Weather at coordinates: (${lat}, ${lon})`)
+                .openOn(map);
         }
         if ($('#zip-submit').val()) {
             $('#zip-submit').removeClass('disabled');
         }
+        app.enableMap();
         $('#loading').hide();
     },
     onFetchWeatherError (jqXHR, err, errThrown) {
@@ -204,6 +229,7 @@ const app = {
             return;
         }
         $('#zip-submit').addClass('disabled');
+        app.disableMap();
         $('#loading').show();
         app.fetchWeather(zip);
     },
