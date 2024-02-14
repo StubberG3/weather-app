@@ -74,6 +74,10 @@ const app = {
         }, 1000);
         app.fetchWeather();
     },
+    onLoadingComplete() {
+        app.enableMap();
+        $('#loading').hide();
+    },
     onFetchWeatherSuccess (jqXHR, status) {
         console.log(jqXHR, status);
         if (jqXHR.error) {
@@ -96,8 +100,6 @@ const app = {
         if ($('#zip-submit').val()) {
             $('#zip-submit').removeClass('disabled');
         }
-        app.enableMap();
-        $('#loading').hide();
     },
     onFetchWeatherError (jqXHR, err, errThrown) {
         let message;
@@ -469,6 +471,7 @@ const app = {
                     </li>`;
                 })
                 .join(' ');
+            app.onLoadingComplete();
         })();
     },
     toTitleCase: (str) => {
