@@ -26,6 +26,7 @@ const app = {
         longitude: -75.165222
     },
     disableMap: () => {
+        $('#map').addClass('map-disabled');
         if (map) {
             map._handlers.forEach(function(handler) {
                 handler.disable();
@@ -38,6 +39,7 @@ const app = {
                 handler.enable();
             });
         }
+        $('#map').removeClass('map-disabled');
     },
     fetchMap: (lat = app.default.latitude, lon = app.default.longitude) => {
         // fetch the map

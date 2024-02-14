@@ -280,3 +280,12 @@ a.wahay:hover {
         width: 100%;
     }
 }
+
+.map-disabled {
+    opacity: .3;
+}
+
+.leaflet-top,
+.leaflet-bottom {
+    z-index: 500;
+}
