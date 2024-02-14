@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
     try {
-        res.sendFile(path.join(public, '/pages', 'index.html'));
+        res.sendFile(path.join(public, '/pages', 'weather.html'));
     } catch (err) {
         console.log('app.get: ', err);
     }
