@@ -97,9 +97,6 @@ const app = {
                 .setContent(`Weather at coordinates: (${lat}, ${lon})`)
                 .openOn(map);
         }
-        if ($('#zip-submit').val()) {
-            $('#zip-submit').removeClass('disabled');
-        }
     },
     onFetchWeatherError (jqXHR, err, errThrown) {
         let message;
@@ -193,7 +190,6 @@ const app = {
             M.Sidenav.init(document.querySelectorAll('.sidenav'));
             M.Collapsible.init(document.querySelectorAll('.collapsible'));
             $('#zip-input').on('keyup', app.validateZip);
-            $('#zip-submit').click(app.submitZip);
             $('#wahay').click(function() {
                 if (!this.msg) {
                     this.msg = 'Wahay!';
@@ -214,25 +210,28 @@ const app = {
         });
     },
     validateZip: (e) => {
-        let $zip = $(e.target);
-        let $zipSubmit = $('#zip-submit');
+        let $zip = $('#zip-input');
         let zip = $zip.val();
+        let valid = false;
+
         if (zip.length !== 5) {
-            $zipSubmit.addClass('disabled');
+            valid = false;
         } else {
-            $('#zip-input-message').text('');
-            $zipSubmit.removeClass('disabled');
-            return false;
-        };
-    },
-    submitZip: (e) => {
-        e.preventDefault();
-        let zip = $('#zip-input').val();
-        if (zip.length !== 5) {
-            $('#zip-input-message').text('Zip must be 5 digits');
+            valid = true;
+        }
+
+        if (!valid) {
+            if (e.keyCode !== 13) { // Enter
+                return;
+            }
+            alert('Zip must be 5 digits');
             return;
         }
-        $('#zip-submit').addClass('disabled');
+
+        app.submitZip();
+    },
+    submitZip: () => {
+        let zip = $('#zip-input').val();
         app.disableMap();
         $('#loading').show();
         app.fetchWeather(zip);

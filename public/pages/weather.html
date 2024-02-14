@@ -42,10 +42,7 @@
             </div>
             <div class="input-field" style="margin: 0;">
                 <i class="material-icons prefix center">search</i>
-                <input id="zip-input" type="number" pattern="/^-?\d+\.?\d*$/" placeholder="Search by Zip Code">
-            </div>
-            <div class="zip-submit-wrapper">
-                <a id="zip-submit" href="#!" class="btn disabled">Search</a>
+                <input type="text" id="zip-input" pattern="[0-9]{5}"\ maxlength="5" name="zip-input" required="required" placeholder="Search by Zip Code"/>
             </div>
             <!-- <div id="temp-scale" class="switch" style="margin: 0 10px;">
                 <label>
